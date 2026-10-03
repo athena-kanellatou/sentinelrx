@@ -39,10 +39,10 @@ Clinician review
 
 ## Demo
 
+Create and activate an isolated virtual environment:
+
 ```bash
-pip install -e ".[dev]"
-streamlit run sentinelrx/ui.py
-```
+python -m venv .venv```
 
 API:
 
