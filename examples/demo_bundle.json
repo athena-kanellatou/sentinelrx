@@ -1,5 +1,124 @@
 {
   "resourceType": "Bundle",
   "type": "collection",
-  "entry": []
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "demo-patient"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "home-lisinopril",
+        "status": "active",
+        "meta": {
+          "tag": [
+            {
+              "code": "admission"
+            }
+          ]
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "29046",
+              "display": "Lisinopril"
+            }
+          ]
+        },
+        "dosageInstruction": [
+          {
+            "text": "10 mg daily"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "home-metformin",
+        "status": "active",
+        "meta": {
+          "tag": [
+            {
+              "code": "admission"
+            }
+          ]
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "6809",
+              "display": "Metformin"
+            }
+          ]
+        },
+        "dosageInstruction": [
+          {
+            "text": "500 mg twice daily"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "discharge-lisinopril",
+        "status": "active",
+        "meta": {
+          "tag": [
+            {
+              "code": "discharge"
+            }
+          ]
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "29046",
+              "display": "Lisinopril"
+            }
+          ]
+        },
+        "dosageInstruction": [
+          {
+            "text": "20 mg daily"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "discharge-lisinopril-copy",
+        "status": "active",
+        "meta": {
+          "tag": [
+            {
+              "code": "discharge"
+            }
+          ]
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "29046",
+              "display": "Lisinopril"
+            }
+          ]
+        },
+        "dosageInstruction": [
+          {
+            "text": "20 mg daily"
+          }
+        ]
+      }
+    }
+  ]
 }
