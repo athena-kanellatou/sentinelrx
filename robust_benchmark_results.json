@@ -1,0 +1,549 @@
+{
+  "cases": 90,
+  "verified_exact_accuracy": 1.0,
+  "abstention_behavior_accuracy": 1.0,
+  "crash_rate": 0.0,
+  "crashes": 0,
+  "rows": [
+    {
+      "case": "RB-001",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-002",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-003",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-004",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-005",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-006",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-007",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-008",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-009",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-010",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-011",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-012",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-013",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-014",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-015",
+      "category": "clean",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-016",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-017",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-018",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-019",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-020",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-021",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-022",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-023",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-024",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-025",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-026",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-027",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-028",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-029",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-030",
+      "category": "omission",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-031",
+      "category": "unknown_context",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-032",
+      "category": "unknown_context",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-033",
+      "category": "unknown_context",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-034",
+      "category": "unknown_context",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-035",
+      "category": "unknown_context",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-036",
+      "category": "unknown_context",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-037",
+      "category": "unknown_context",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-038",
+      "category": "unknown_context",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-039",
+      "category": "unknown_context",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-040",
+      "category": "unknown_context",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-041",
+      "category": "unknown_medication",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-042",
+      "category": "unknown_medication",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-043",
+      "category": "unknown_medication",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-044",
+      "category": "unknown_medication",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-045",
+      "category": "unknown_medication",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-046",
+      "category": "unknown_medication",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-047",
+      "category": "unknown_medication",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-048",
+      "category": "unknown_medication",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-049",
+      "category": "unknown_medication",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-050",
+      "category": "unknown_medication",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-051",
+      "category": "missing_dosage",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-052",
+      "category": "missing_dosage",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-053",
+      "category": "missing_dosage",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-054",
+      "category": "missing_dosage",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-055",
+      "category": "missing_dosage",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-056",
+      "category": "missing_dosage",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-057",
+      "category": "missing_dosage",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-058",
+      "category": "missing_dosage",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-059",
+      "category": "missing_dosage",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-060",
+      "category": "missing_dosage",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-061",
+      "category": "duplicate",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-062",
+      "category": "duplicate",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-063",
+      "category": "duplicate",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-064",
+      "category": "duplicate",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-065",
+      "category": "duplicate",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-066",
+      "category": "duplicate",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-067",
+      "category": "duplicate",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-068",
+      "category": "duplicate",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-069",
+      "category": "duplicate",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-070",
+      "category": "duplicate",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-071",
+      "category": "dose_change",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-072",
+      "category": "dose_change",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-073",
+      "category": "dose_change",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-074",
+      "category": "dose_change",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-075",
+      "category": "dose_change",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-076",
+      "category": "dose_change",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-077",
+      "category": "dose_change",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-078",
+      "category": "dose_change",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-079",
+      "category": "dose_change",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-080",
+      "category": "dose_change",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-081",
+      "category": "malformed_entries",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-082",
+      "category": "malformed_entries",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-083",
+      "category": "malformed_entries",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-084",
+      "category": "malformed_entries",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-085",
+      "category": "malformed_entries",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-086",
+      "category": "malformed_entries",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-087",
+      "category": "malformed_entries",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-088",
+      "category": "malformed_entries",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-089",
+      "category": "malformed_entries",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "RB-090",
+      "category": "malformed_entries",
+      "verified_exact": true,
+      "abstain_correct": true
+    }
+  ]
+}
