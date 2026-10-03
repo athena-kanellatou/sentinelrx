@@ -138,7 +138,7 @@ with tabs[1]:
 with tabs[2]:
     st.subheader("Evidence Provenance")
     st.write("Every surfaced finding must link back to concrete FHIR resources.")
-    ev = evidence_table(result)
+    ev = evidence_table(result.findings)
     if ev.empty:
         st.info("No evidence links to show.")
     else:
