@@ -126,14 +126,14 @@ with tabs[1]:
     st.subheader("Admission → Discharge Medication Timeline")
     df = medication_table(result)
     if not df.empty:
-        st.dataframe(df, use_container_width=True, hide_index=True)
+        st.dataframe(df, width="stretch", hide_index=True)
         pivot = (
             df.assign(Present="●")
               .pivot_table(index="Medication", columns="Context", values="Present", aggfunc="first", fill_value="")
               .reset_index()
         )
         st.write("Transition view")
-        st.dataframe(pivot, use_container_width=True, hide_index=True)
+        st.dataframe(pivot, width="stretch", hide_index=True)
 
 with tabs[2]:
     st.subheader("Evidence Provenance")
@@ -142,7 +142,7 @@ with tabs[2]:
     if ev.empty:
         st.info("No evidence links to show.")
     else:
-        st.dataframe(ev, use_container_width=True, hide_index=True)
+        st.dataframe(ev, width="stretch", hide_index=True)
         st.caption("This is the core safety contract: no unsupported finding reaches VERIFIED state.")
 
 with tabs[3]:
@@ -200,7 +200,7 @@ with tabs[4]:
     st.dataframe(pd.DataFrame([
         {"System": "SentinelRx", "Precision": a["precision"], "Recall": a["recall"], "F1": a["f1"], "Exact-case accuracy": a["exact_case_accuracy"]},
         {"System": "Naive baseline", "Precision": b["precision"], "Recall": b["recall"], "F1": b["f1"], "Exact-case accuracy": b["exact_case_accuracy"]},
-    ]), use_container_width=True, hide_index=True)
+    ]), width="stretch", hide_index=True)
 
     st.write("Failure-handling benchmark")
     st.dataframe(pd.DataFrame([{
@@ -208,7 +208,7 @@ with tabs[4]:
         "Verified exact accuracy": robust["verified_exact_accuracy"],
         "Abstention behavior accuracy": robust["abstention_behavior_accuracy"],
         "Crash rate": robust["crash_rate"],
-    }]), use_container_width=True, hide_index=True)
+    }]), width="stretch", hide_index=True)
 
     st.warning(
         "These results measure deterministic behavior on generated synthetic test conditions. "
