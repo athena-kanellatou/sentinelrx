@@ -1,4 +1,5 @@
 from collections import Counter, defaultdict
+from .verifier import verify_candidate
 from .fhir import extract_medication_events, patient_id
 from .models import AnalysisResult, EvidenceRef, FindingType, SafetyFinding, VerificationStatus
 
@@ -16,14 +17,14 @@ def detect_candidates(events):
     findings = []
 
     for event in events:
-        if event.context == "unknown" or event.medication_key == "unknown":
+        if event.issues or event.context == "unknown" or event.medication_key == "unknown":
             findings.append(SafetyFinding(
                 finding_id=f"abstain:{event.resource_id}",
                 finding_type=FindingType.INSUFFICIENT_EVIDENCE,
                 medication_key=event.medication_key,
                 medication_display=event.medication_display,
                 summary=f"Insufficient evidence for {event.medication_display}",
-                rationale="Medication resource lacks reliable transition context or medication identity.",
+                rationale="; ".join(event.issues) or "Medication resource lacks reliable transition context or medication identity.",
                 evidence=[_evidence(event, "unresolved medication resource")],
                 verification_status=VerificationStatus.ABSTAIN,
             ))
@@ -40,7 +41,7 @@ def detect_candidates(events):
             summary=f"Potential unexplained omission: {src.medication_display}",
             rationale="Medication appears in admission/home list but not discharge list.",
             evidence=[_evidence(src, "admission medication")]
-        ).verify_if_grounded())
+        ))
 
     for key in sorted(set(discharge) - set(admission)):
         src = discharge[key][0]
@@ -50,7 +51,7 @@ def detect_candidates(events):
             summary=f"Potential new medication at discharge: {src.medication_display}",
             rationale="Medication appears in discharge list but not admission/home list.",
             evidence=[_evidence(src, "discharge medication")]
-        ).verify_if_grounded())
+        ))
 
     counts = Counter(e.medication_key for e in usable if e.context == "discharge")
     for key,count in counts.items():
@@ -62,7 +63,7 @@ def detect_candidates(events):
                 summary=f"Potential duplicate discharge medication: {dup[0].medication_display}",
                 rationale=f"{count} discharge resources resolve to same medication key.",
                 evidence=[_evidence(e, "duplicate discharge entry") for e in dup]
-            ).verify_if_grounded(minimum_evidence=2))
+            ))
 
     for key in sorted(set(admission) & set(discharge)):
         pre, post = admission[key][0], discharge[key][0]
@@ -73,9 +74,9 @@ def detect_candidates(events):
                 summary=f"Dose text changed for {post.medication_display}",
                 rationale=f"Admission dose: '{pre.dose_text}' -> discharge dose: '{post.dose_text}'.",
                 evidence=[_evidence(pre, "admission dose"), _evidence(post, "discharge dose")]
-            ).verify_if_grounded(minimum_evidence=2))
+            ))
     return findings
 
 def analyze_bundle(bundle):
     events = extract_medication_events(bundle)
-    return AnalysisResult(patient_id=patient_id(bundle), medications=events, findings=detect_candidates(events))
+    return AnalysisResult(patient_id=patient_id(bundle), medications=events, findings=[verify_candidate(f, events) for f in detect_candidates(events)])

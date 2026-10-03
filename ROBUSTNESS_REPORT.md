@@ -7,7 +7,7 @@
 - Naive baseline F1: 0.600
 
 ## Robustness / failure-handling suite
-- 90 adversarial and incomplete synthetic cases
+- 90 edge and incomplete synthetic cases
 - Verified-finding exact accuracy: 1.000
 - Abstention-behavior accuracy: 1.000
 - Crash rate: 0.000

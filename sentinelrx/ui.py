@@ -84,15 +84,22 @@ st.set_page_config(page_title="SentinelRx", page_icon="🛡️", layout="wide")
 st.title("SentinelRx")
 st.caption("Evidence-grounded medication-transition safety for synthetic FHIR R4 data")
 
-st.info("The AI proposes. Deterministic code verifies. The clinician decides.")
+st.info("Rules flag discrepancies. Evidence checks gate findings. The clinician decides.")
 
 bundle = load_json(DEMO_BUNDLE)
+scenario = st.selectbox("Demo evidence", ["Complete synthetic transition", "Missing medication identity"])
+if scenario == "Missing medication identity":
+    for entry in bundle["entry"]:
+        resource = entry.get("resource", {})
+        if resource.get("id") == "discharge-lisinopril":
+            resource.pop("medicationCodeableConcept", None)
+st.caption("VERIFIED = bundle-local predicate and source checks passed; not clinical correctness. Absence assumes complete supplied lists. Missing dose text is not assessed.")
 result = analyze_bundle(bundle)
 
 tabs = st.tabs([
     "Safety Review",
     "Medication Timeline",
-    "Evidence Graph",
+    "Evidence Provenance",
     "Counterfactual Lab",
     "Evaluation",
 ])
@@ -117,6 +124,7 @@ with tabs[0]:
             status = "VERIFIED" if finding.verification_status == VerificationStatus.VERIFIED else "ABSTAIN"
             with st.expander(f"{status} · {finding.summary}", expanded=True):
                 st.write(finding.rationale)
+                st.caption(finding.verification_reason)
                 st.caption(f"Finding type: {finding.finding_type.value}")
                 st.write("Evidence")
                 for ev in finding.evidence:
@@ -137,7 +145,7 @@ with tabs[1]:
 
 with tabs[2]:
     st.subheader("Evidence Provenance")
-    st.write("Every surfaced finding must link back to concrete FHIR resources.")
+    st.write("Verified findings resolve to source resources. Abstentions may identify missing or unresolvable evidence.")
     ev = evidence_table(result.findings)
     if ev.empty:
         st.info("No evidence links to show.")
@@ -163,17 +171,18 @@ with tabs[3]:
     with left:
         st.markdown("**Before**")
         for f in result.findings:
-            st.write(f"• {f.summary}")
+            st.write(f"• {f.verification_status.value.upper()} · {f.summary}")
     with right:
         st.markdown("**After**")
         if mutated_result.findings:
             for f in mutated_result.findings:
-                st.write(f"• {f.summary}")
+                st.write(f"• {f.verification_status.value.upper()} · {f.summary}")
         else:
             st.success("No remaining discrepancies in this scenario.")
 
-    before_ids = {f.finding_id for f in result.findings}
+    before_ids = {f.finding_id for f in result.findings if f.verification_status == VerificationStatus.VERIFIED}
     after_ids = {f.finding_id for f in mutated_result.findings}
+    st.caption("Disappearing candidates are not proof of clinical resolution; check any abstentions above.")
     resolved = sorted(before_ids - after_ids)
     if resolved:
         st.success("Resolved by changed evidence: " + ", ".join(resolved))
@@ -209,6 +218,12 @@ with tabs[4]:
         "Abstention behavior accuracy": robust["abstention_behavior_accuracy"],
         "Crash rate": robust["crash_rate"],
     }]), width="stretch", hide_index=True)
+
+    challenge_path = ROOT / "perturbation_results.json"
+    if challenge_path.exists():
+        challenge = load_json(challenge_path)
+        st.write("Authored development perturbations (not held-out)")
+        st.json({k: v for k, v in challenge.items() if k != "rows"})
 
     st.warning(
         "These results measure deterministic behavior on generated synthetic test conditions. "
