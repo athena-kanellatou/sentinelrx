@@ -38,7 +38,7 @@ Safe:
 - “synthetic FHIR R4 evaluation”
 - “exact agreement with predefined ground truth on generated regression cases”
 - “explicit abstention when evidence is insufficient”
-- “0 crashes across 90 generated adversarial/incomplete cases”
+- “0 crashes across 90 generated edge/incomplete cases”
 
 Avoid:
 - “prevents medication errors”

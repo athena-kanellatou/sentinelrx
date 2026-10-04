@@ -29,6 +29,7 @@ class MedicationEvent(BaseModel):
     status: str | None = None
     context: str
     dose_text: str | None = None
+    issues: list[str] = Field(default_factory=list)
 
 class SafetyFinding(BaseModel):
     finding_id: str
@@ -41,12 +42,7 @@ class SafetyFinding(BaseModel):
     evidence: list[EvidenceRef] = Field(default_factory=list)
     verification_status: VerificationStatus = VerificationStatus.ABSTAIN
 
-    def verify_if_grounded(self, minimum_evidence: int = 1) -> "SafetyFinding":
-        self.verification_status = (
-            VerificationStatus.VERIFIED if len(self.evidence) >= minimum_evidence
-            else VerificationStatus.ABSTAIN
-        )
-        return self
+    verification_reason: str = "Not verified."
 
 class AnalysisResult(BaseModel):
     patient_id: str | None = None

@@ -77,7 +77,7 @@ def build_cases(n=120):
     return cases
 
 def sentinel_predict(case):
-    return {f.finding_id for f in analyze_bundle(case.bundle).findings}
+    return {f.finding_id for f in analyze_bundle(case.bundle).findings if f.verification_status.value == "verified"}
 
 def naive_baseline_predict(case):
     # Deliberately simple baseline: compare med presence only; cannot handle duplicates or dose changes.

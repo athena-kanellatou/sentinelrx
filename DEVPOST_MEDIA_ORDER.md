@@ -2,7 +2,7 @@
 
 Recommended gallery order:
 
-1. **SentinelRx — AI Safety Review for Medication Transitions**
+1. **SentinelRx — Evidence-Grounded Safety Review for Medication Transitions**
    - `assets/sentinelrx-hero.png`
 
 2. **Safety Review**

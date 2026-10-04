@@ -1,0 +1,202 @@
+{
+  "evaluation_scope": "Authored development perturbations; not held-out, independently labelled, or clinically validated.",
+  "cases": 32,
+  "verified_exact_accuracy": 1.0,
+  "abstention_behavior_accuracy": 1.0,
+  "crash_rate": 0.0,
+  "crashes": 0,
+  "rows": [
+    {
+      "case": "order_noise_0",
+      "category": "order_noise_0",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "order_noise_1",
+      "category": "order_noise_1",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "order_noise_2",
+      "category": "order_noise_2",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "order_noise_3",
+      "category": "order_noise_3",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "order_noise_4",
+      "category": "order_noise_4",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "order_noise_5",
+      "category": "order_noise_5",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "display_invariance",
+      "category": "display_invariance",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "blank_first_coding",
+      "category": "blank_first_coding",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "context_case_space",
+      "category": "context_case_space",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "mixed_resource_types",
+      "category": "mixed_resource_types",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "invalid_id_",
+      "category": "invalid_id_",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "invalid_status_stopped",
+      "category": "invalid_status_stopped",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "invalid_status_cancelled",
+      "category": "invalid_status_cancelled",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "invalid_status_None",
+      "category": "invalid_status_None",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "invalid_meta_invalid",
+      "category": "invalid_meta_invalid",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "repeated_discharge_id",
+      "category": "repeated_discharge_id",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "repeated_admission_id",
+      "category": "repeated_admission_id",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "conflicting_tags",
+      "category": "conflicting_tags",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "substring_is_not_context",
+      "category": "substring_is_not_context",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "system_collision",
+      "category": "system_collision",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "ambiguous_codings",
+      "category": "ambiguous_codings",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "malformed_identity_21",
+      "category": "malformed_identity_21",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "malformed_identity_22",
+      "category": "malformed_identity_22",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "malformed_identity_23",
+      "category": "malformed_identity_23",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "malformed_identity_24",
+      "category": "malformed_identity_24",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "malformed_identity_25",
+      "category": "malformed_identity_25",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "unsupported_reference",
+      "category": "unsupported_reference",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "multiple_dosages",
+      "category": "multiple_dosages",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "dose_case_space",
+      "category": "dose_case_space",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "dose_text_not_semantic_equivalence",
+      "category": "dose_text_not_semantic_equivalence",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "missing_dose_no_dose_claim",
+      "category": "missing_dose_no_dose_claim",
+      "verified_exact": true,
+      "abstain_correct": true
+    },
+    {
+      "case": "conflicting_admission_doses",
+      "category": "conflicting_admission_doses",
+      "verified_exact": true,
+      "abstain_correct": true
+    }
+  ]
+}

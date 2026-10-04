@@ -1,34 +1,19 @@
-# SentinelRx Demo Script (≈ 105 seconds)
+# SentinelRx: 115-second demo
 
-## 0–12s — Problem
-“Hospital discharge is a fragile transition. A medication can disappear, be duplicated, or change dose between admission and discharge.”
+0-10s — Show the admission/discharge timeline. “In this synthetic transition, metformin is absent from discharge, lisinopril appears twice, and its dose text changes.”
 
-## 12–22s — Product
-“SentinelRx is an evidence-grounded safety layer for medication transitions. The AI proposes. Deterministic code verifies. The clinician decides.”
+10-25s — Safety Review: 3 VERIFIED, 0 ABSTAIN, 4 resources. “SentinelRx flags discrepancies with deterministic rules. A separate gate checks the evidence before presenting verified findings for clinician review.”
 
-## 22–45s — Safety Review
-Open **Safety Review**.
-Show verified findings and expand one.
-Say: “A finding is never just text. It has to point back to evidence.”
+25-43s — Expand the dose-text change and show both resource IDs and verification explanation. “Verified means these source references and the discrepancy predicate checked out within this bundle. It does not mean the change was clinically wrong.”
 
-## 45–60s — Evidence Provenance
-Open **Evidence Graph**.
-Show the FHIR resource IDs.
-Say: “Every surfaced finding is traceable to the exact FHIR resources that support it.”
+43-55s — Evidence Provenance table. “Each finding resolves to the records involved. No hidden source or generated clinical recommendation.”
 
-## 60–78s — Counterfactual
-Open **Counterfactual Lab**.
-Choose **Resolve metformin omission**.
-Say: “Now I change the underlying synthetic evidence and rerun the same engine.”
-Show that the omission disappears.
+55-75s — Counterfactual Lab: resolve metformin omission. Show three findings becoming two. “Changing the synthetic evidence removes the omission candidate when the same engine reruns.”
 
-## 78–95s — Evaluation
-Open **Evaluation**.
-Show 120 standard cases and 90 robustness cases.
-Say: “The benchmark is reproducible and synthetic. SentinelRx achieved exact agreement with predefined ground truth on the generated regression suite, while a simple medication-set baseline reached 0.600 F1.”
+75-93s — Change Demo evidence to Missing medication identity; return to Safety Review. Show 0 VERIFIED and ABSTAIN explanations. “An unknown medication could change the comparison. The gate abstains instead of assuming it knows.”
 
-## 95–105s — Close
-“SentinelRx is not trying to replace clinical judgment. It is designed to make AI-supported medication review more traceable, verifiable, and willing to abstain.”
+93-108s — Evaluation: 120 regression, 90 failure-handling, 32 authored perturbations. “These are reproducible synthetic software tests, not held-out evaluation or clinical validation. The baseline only compares medication sets.”
 
-Final screen:
-**AI should not just produce an answer. It should be able to show the evidence behind it — or know when not to answer.**
+108-115s — Close: “Evidence before confidence. Abstention before guessing. The clinician decides.”
+
+Keep the scope caption visible. Do not describe this implementation as AI-powered, general FHIR support, clinical validation or an independent clinical verifier. Originality disclosure belongs in the submission text and README. Record actual UI footage; the hero graphic is an informational summary, not an application screenshot.
