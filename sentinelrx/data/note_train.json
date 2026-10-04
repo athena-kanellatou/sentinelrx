@@ -1,0 +1,14 @@
+{
+  "stop": [
+    "Stop this medication at discharge.", "Discontinue the tablet on leaving hospital.", "The medicine has been stopped.", "Hold the medication pending review.", "Do not restart this medication.", "Treatment discontinued following review.", "Withhold the drug until the next appointment.", "Cease the current medication.", "The prescription was cancelled.", "Remove this medicine from the discharge list.", "No further doses of this drug.", "This medication is no longer required."
+  ],
+  "continue": [
+    "Continue this medication unchanged.", "Maintain the existing dose.", "Resume the usual medication schedule.", "No change to the current prescription.", "Keep taking the same dose.", "The medication should continue after discharge.", "Restart the usual home dose.", "Continue regular therapy as before.", "The previous regimen remains unchanged.", "Carry on with the current tablets.", "Retain this medication on discharge.", "Continue at the same frequency."
+  ],
+  "change": [
+    "Increase the dose at discharge.", "Reduce the medication to half the previous dose.", "Change the dosing frequency to twice daily.", "The dose has been adjusted.", "Switch from morning to evening dosing.", "Titrate the medication to a higher dose.", "Decrease the daily amount.", "Dose increased following review.", "The tablet strength was changed.", "A lower dose is prescribed.", "Change the route of administration.", "Adjust the regimen from twice to once daily."
+  ],
+  "start": [
+    "Start this new medication at discharge.", "Begin treatment with this drug.", "A new medicine has been added.", "Initiate the medication today.", "Introduce a new daily tablet.", "First prescription for this medication.", "Commence a new course of treatment.", "Add this medicine to the discharge list.", "New therapy was initiated in hospital.", "The patient is starting this drug.", "A new prescription was issued.", "Begin taking this medicine tomorrow."
+  ]
+}

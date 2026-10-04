@@ -487,61 +487,61 @@
     },
     {
       "case": "RB-081",
-      "category": "malformed_entries",
+      "category": "non_medication_entries",
       "verified_exact": true,
       "abstain_correct": true
     },
     {
       "case": "RB-082",
-      "category": "malformed_entries",
+      "category": "non_medication_entries",
       "verified_exact": true,
       "abstain_correct": true
     },
     {
       "case": "RB-083",
-      "category": "malformed_entries",
+      "category": "non_medication_entries",
       "verified_exact": true,
       "abstain_correct": true
     },
     {
       "case": "RB-084",
-      "category": "malformed_entries",
+      "category": "non_medication_entries",
       "verified_exact": true,
       "abstain_correct": true
     },
     {
       "case": "RB-085",
-      "category": "malformed_entries",
+      "category": "non_medication_entries",
       "verified_exact": true,
       "abstain_correct": true
     },
     {
       "case": "RB-086",
-      "category": "malformed_entries",
+      "category": "non_medication_entries",
       "verified_exact": true,
       "abstain_correct": true
     },
     {
       "case": "RB-087",
-      "category": "malformed_entries",
+      "category": "non_medication_entries",
       "verified_exact": true,
       "abstain_correct": true
     },
     {
       "case": "RB-088",
-      "category": "malformed_entries",
+      "category": "non_medication_entries",
       "verified_exact": true,
       "abstain_correct": true
     },
     {
       "case": "RB-089",
-      "category": "malformed_entries",
+      "category": "non_medication_entries",
       "verified_exact": true,
       "abstain_correct": true
     },
     {
       "case": "RB-090",
-      "category": "malformed_entries",
+      "category": "non_medication_entries",
       "verified_exact": true,
       "abstain_correct": true
     }

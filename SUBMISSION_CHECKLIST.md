@@ -1,90 +1,26 @@
-# SentinelRx — Devpost Final Submission Checklist
+# Submission checklist for v0.5
 
-## Project page order
+Implemented and locally checked:
+- [x] Local learned note inference and visible exact source
+- [x] EVIDENCE-CHECKED / ABSTAIN record labels
+- [x] AI proposals cannot mutate record findings
+- [x] Full namespace-safe medication identity
+- [x] Patient, request intent and unsupported modifier checks
+- [x] API size limit and malformed-entry errors
+- [x] 78 tests and Streamlit interaction smoke checks
+- [x] Published synthetic training/evaluation split and individual outputs
+- [x] Updated Devpost draft, demo script and prior-work disclosure
 
-### 1. Hero image
-Upload first:
-`assets/sentinelrx-hero.png`
+Before submitting:
+- [ ] Review and merge the implementation PR
+- [ ] Verify the final hosted demo builds with scikit-learn 1.8.0
+- [ ] Record a NEW video of this revision using DEMO_SCRIPT.md
+- [ ] Replace old Devpost text with DEVPOST_SUBMISSION.md
+- [ ] Replace old screenshots/hero with the current captured interface
+- [ ] Upload/link assets/SentinelRx_Judge_OnePager.pdf
+- [ ] Upload/link assets/SentinelRx_Code.pdf
+- [ ] Confirm all public links work signed out
+- [ ] Check the organizer's current deadline; overview and rules dates previously differed
+- [ ] Complete the Devpost rules checkbox and final submit action
 
-### 2. Screenshot order
-1. Safety Review
-2. Medication Timeline
-3. Evidence Provenance
-4. Counterfactual Lab
-5. Evaluation
-
-### 3. Try it out
-Add:
-- public GitHub repository
-- public hosted demo only if deployment is stable
-
-Do not add a broken or temporary deployment link.
-
-### 4. Video
-Target length: 100–120 seconds.
-Use `DEMO_SCRIPT.md`.
-
-### 5. Judge PDF
-Use:
-`assets/SentinelRx_Judge_OnePager.pdf`
-
-If Devpost does not have a dedicated PDF field, link it from the public GitHub repository README or project links.
-
-## Claims audit
-
-Safe:
-- “identifies potential medication discrepancies for clinician review”
-- “evidence-grounded”
-- “synthetic FHIR R4 evaluation”
-- “exact agreement with predefined ground truth on generated regression cases”
-- “explicit abstention when evidence is insufficient”
-- “0 crashes across 90 generated edge/incomplete cases”
-
-Avoid:
-- “prevents medication errors”
-- “100% clinically accurate”
-- “clinically validated”
-- “safe for clinical deployment”
-- “outperforms clinicians”
-- “FDA-ready”
-- “diagnoses”
-- “prescribes”
-
-## Metrics to show
-
-Standard synthetic suite:
-- 120 cases
-- SentinelRx F1: 1.000
-- Naive baseline F1: 0.600
-- SentinelRx exact-case accuracy: 1.000
-- Naive baseline exact-case accuracy: 0.500
-
-Robustness suite:
-- 90 cases
-- verified-finding exact accuracy: 1.000
-- abstention behavior accuracy: 1.000
-- crash rate: 0.000
-
-Always attach the qualifier:
-“Generated synthetic test conditions only; not clinical validation.”
-
-## Prior-work disclosure
-
-Keep the prior-work paragraph visible in the Devpost “About” section. Do not remove it.
-
-## Final pre-submit checks
-
-- [ ] Public GitHub repo opens without authentication
-- [ ] README renders correctly
-- [ ] `pytest -q` passes
-- [ ] hero image loads
-- [ ] judge PDF opens
-- [ ] benchmark JSON files are committed
-- [ ] no API keys / secrets / `.env`
-- [ ] no PHI or real patient data
-- [ ] video link works in incognito/private browser
-- [ ] all screenshots are readable on laptop screen
-- [ ] Devpost About text matches actual implemented features
-- [ ] sponsor prize claims are eligible
-- [ ] Official Rules checkbox completed
-- [ ] final submission completed before deadline
+Remaining evidence gaps: no clinician review, external evaluation, realistic encounter reconstruction or independently measured workflow benefit. Do not mark these completed or promise 25/25.

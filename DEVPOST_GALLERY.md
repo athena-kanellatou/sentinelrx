@@ -1,30 +1,9 @@
-# Devpost Gallery Capture List
+# Current gallery order
 
-Capture these five screenshots at 3:2 aspect ratio if possible:
+1. AI Note Review: Metformin + documented stop, omission still visible.
+2. Safety Review: three EVIDENCE-CHECKED record findings.
+3. AI Note Review: ambiguous note produces ABSTAIN.
+4. Counterfactual Lab: metformin record added, omission disappears.
+5. Evaluation: authored-split scope and coverage visible.
 
-1. **Hero / Safety Review**
-   - SentinelRx title
-   - verified findings count
-   - one expanded high-signal finding
-   - visible evidence resource IDs
-
-2. **Medication Timeline**
-   - admission and discharge contexts side by side
-   - clear medication names and dose text
-
-3. **Evidence Provenance**
-   - finding → FHIR resource linkage
-   - show at least 3 resource IDs
-
-4. **Counterfactual Lab**
-   - before/after columns
-   - “Resolved by changed evidence” message visible
-
-5. **Evaluation**
-   - 120 standard cases
-   - SentinelRx F1 1.000
-   - Naive baseline F1 0.600
-   - 90 robustness cases
-   - crash rate 0.000
-
-Do not crop away the synthetic-data / non-clinical-validation safety note on the evaluation screen.
+Use actual screenshots of v0.5. The supplied hero is a rendered factual project summary, not an application screenshot. Capture the listed UI screenshots before submission; browser image capture was unavailable in this environment.

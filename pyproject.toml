@@ -1,6 +1,6 @@
 [project]
 name = "sentinelrx"
-version = "0.4.0"
+version = "0.5.0"
 description = "Evidence-grounded medication-transition safety for synthetic FHIR R4 records"
 requires-python = ">=3.11"
 dependencies = [
@@ -9,6 +9,7 @@ dependencies = [
   "uvicorn>=0.30,<1",
   "streamlit>=1.49,<2",
   "pandas>=2.2,<3",
+  "scikit-learn==1.8.0",
 ]
 
 [project.optional-dependencies]
@@ -20,3 +21,6 @@ testpaths = ["tests"]
 
 [tool.setuptools]
 packages = ["sentinelrx"]
+
+[tool.setuptools.package-data]
+sentinelrx = ["data/*.json"]

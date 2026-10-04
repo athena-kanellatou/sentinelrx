@@ -29,7 +29,7 @@ def verify_candidate(finding, events):
         if expected_role.get(ref.role) != event.context:
             return finding
         resolved.append(event)
-    relevant = [e for e in events if e.medication_key == finding.medication_key or e.medication_key == "unknown"]
+    relevant = [e for e in events if e.medication_key == finding.medication_key or (e.medication_key == "unknown" and finding.finding_type in {T.OMISSION, T.ADDITION})]
     if any(e.issues or e.context == "unknown" or e.medication_key == "unknown" for e in relevant):
         finding.verification_reason = "Ambiguous or unsupported source data may affect this medication."
         return finding

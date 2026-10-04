@@ -121,8 +121,8 @@
       "abstain_correct": true
     },
     {
-      "case": "system_collision",
-      "category": "system_collision",
+      "case": "distinct_systems",
+      "category": "distinct_systems",
       "verified_exact": true,
       "abstain_correct": true
     },

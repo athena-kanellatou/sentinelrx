@@ -14,6 +14,11 @@ def med(rid, code=None, display=None, context=None, dose="10 mg daily"):
     return r
 
 def bundle(cid, resources):
+    from copy import deepcopy
+    resources = deepcopy(resources)
+    for resource in resources:
+        if resource.get("resourceType") in {"MedicationRequest", "MedicationStatement"}:
+            resource.setdefault("subject", {"reference": "Patient/" + cid})
     return {"resourceType":"Bundle","type":"collection",
             "entry":[{"resource":{"resourceType":"Patient","id":cid}}] + [{"resource":r} for r in resources]}
 
@@ -32,7 +37,7 @@ def build_robust_cases():
         nonlocal i
         cid=f"RB-{i:03d}"
         cases.append(RobustCase(cid, payload if payload is not None else bundle(cid, resources),
-                                set(expected or []), abstain, category))
+                                {x.replace(":", ":urn:robust|", 1) for x in (expected or [])}, abstain, category))
         i+=1
 
     meds=[("metformin","Metformin"),("lisinopril","Lisinopril"),("amlodipine","Amlodipine")]
@@ -56,9 +61,9 @@ def build_robust_cases():
     for j in range(10):
         cid=f"RB-{i:03d}"
         payload={"resourceType":"Bundle","type":"collection","entry":[
-            {"resource":{"resourceType":"Patient","id":cid}}, {}, {"resource":"not-a-dict"},
+            {"resource":{"resourceType":"Patient","id":cid}},
             {"resource":{"resourceType":"Observation","id":f"o{j}"}}]}
-        add("malformed_entries",[],[],False,payload)
+        add("non_medication_entries",[],[],False,payload)
     return cases
 
 def score_robust(cases):

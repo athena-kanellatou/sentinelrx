@@ -1,28 +1,37 @@
 from __future__ import annotations
 from collections.abc import Iterable
 from typing import Any
+from urllib.parse import quote
 from .models import MedicationEvent
 
 SUPPORTED_MEDICATION_RESOURCES = {"MedicationRequest", "MedicationStatement"}
 
 def iter_resources(bundle: dict[str, Any]) -> Iterable[dict[str, Any]]:
-    if bundle.get("resourceType") != "Bundle":
+    if not isinstance(bundle, dict) or bundle.get("resourceType") != "Bundle":
         raise ValueError("Expected a FHIR Bundle")
+    if bundle.get("type") != "collection":
+        raise ValueError("Only synthetic collection Bundles are supported")
     entries = bundle.get("entry", [])
     if not isinstance(entries, list):
         raise ValueError("FHIR Bundle.entry must be a list")
     for entry in entries:
         if not isinstance(entry, dict):
-            continue
+            raise ValueError("Each Bundle entry must be an object")
         resource = entry.get("resource")
-        if isinstance(resource, dict):
-            yield resource
+        if not isinstance(resource, dict):
+            raise ValueError("Each Bundle entry must contain a resource object")
+        yield resource
 
 def patient_id(bundle: dict[str, Any]) -> str | None:
     for resource in iter_resources(bundle):
         if resource.get("resourceType") == "Patient":
             return resource.get("id")
     return None
+
+def medication_identity(system: str, code: str) -> str:
+    """Lossless, delimiter-safe namespace + code identity; no terminology mapping."""
+    return quote(system.strip(), safe=":/") + "|" + quote(code.strip(), safe="")
+
 
 def _coding_display(codeable):
     if not isinstance(codeable, dict):
@@ -35,7 +44,7 @@ def _coding_display(codeable):
     if len(identities) != 1:
         return ("unknown", "Unknown medication")
     first = valid[0]
-    return first["code"].strip(), str(first.get("display") or first["code"]).strip()
+    return medication_identity(first["system"], first["code"]), str(first.get("display") or first["code"]).strip()
 
 
 def _dose_text(resource):
@@ -64,7 +73,7 @@ def extract_medication_events(bundle):
     from collections import Counter, defaultdict
     events = []
     resources = list(iter_resources(bundle))
-    patients = {r.get("id") for r in resources if r.get("resourceType") == "Patient" and isinstance(r.get("id"), str)}
+    patients = {r.get("id") for r in resources if r.get("resourceType") == "Patient" and isinstance(r.get("id"), str) and r["id"].strip()}
     subjects = set()
     for r in resources:
         if r.get("resourceType") in ("MedicationRequest", "MedicationStatement"):
@@ -72,22 +81,28 @@ def extract_medication_events(bundle):
             if isinstance(subject, dict) and isinstance(subject.get("reference"), str):
                 subjects.add(subject["reference"])
     mixed_subjects = len(patients) > 1 or len(subjects) > 1 or bool(patients and subjects and subjects != {"Patient/" + next(iter(patients))})
-    systems = defaultdict(set)
     for resource in resources:
         rt = resource.get("resourceType")
         if not isinstance(rt, str) or rt not in SUPPORTED_MEDICATION_RESOURCES:
             continue
         medication = resource.get("medicationCodeableConcept")
         key, display = _coding_display(medication)
-        if key != "unknown":
-            systems[key].update(c["system"].strip() for c in medication["coding"] if isinstance(c, dict) and isinstance(c.get("system"), str) and c.get("code"))
         rid = resource.get("id")
         rid = rid.strip() if isinstance(rid, str) else ""
         issues = []
+        subject = resource.get("subject")
+        if len(patients) != 1 or not isinstance(subject, dict) or subject.get("reference") != "Patient/" + next(iter(patients), ""):
+            issues.append("Explicit subject must resolve to the single Patient in this bundle.")
+        if rt == "MedicationRequest" and resource.get("intent") != "order":
+            issues.append("Only MedicationRequest intent=order is supported.")
         if mixed_subjects:
             issues.append("Multiple or mismatched patient references; single-patient transition required.")
         if not rid:
             issues.append("Missing resource ID; provenance cannot be resolved.")
+        if resource.get("doNotPerform") is not None and resource.get("doNotPerform") is not False:
+            issues.append("Prohibitive or invalid doNotPerform orders require review.")
+        if resource.get("modifierExtension") or resource.get("priorPrescription"):
+            issues.append("Modifier extensions or replacement-order links require review.")
         status = resource.get("status")
         if status != "active":
             issues.append("Only explicitly active medication records are supported; status requires review.")
@@ -113,6 +128,4 @@ def extract_medication_events(bundle):
             e.issues.append("Conflicting dose texts within one transition side require review.")
         if counts[(e.resource_type, e.resource_id)] > 1:
             e.issues.append("Repeated resource identity in bundle; cannot infer distinct prescriptions.")
-        if len(systems[e.medication_key]) > 1:
-            e.issues.append("Same code occurs in different terminology systems; identity is ambiguous.")
     return events

@@ -24,6 +24,11 @@ def med(rid, code, display, context, dose="10 mg daily"):
     }
 
 def bundle(case_id, meds):
+    from copy import deepcopy
+    meds = deepcopy(meds)
+    for resource in meds:
+        if resource.get("resourceType") in {"MedicationRequest", "MedicationStatement"}:
+            resource.setdefault("subject", {"reference": "Patient/" + case_id})
     return {
         "resourceType":"Bundle",
         "type":"collection",
@@ -72,7 +77,7 @@ def build_cases(n=120):
             expected.add(f"omission:{b_code}")
             expected.add(f"dose_change:{a_code}")
             expected.add(f"duplication:{a_code}")
-        cases.append(Case(f"SRX-{idx:03d}", bundle(f"SRX-{idx:03d}", meds), expected, category))
+        cases.append(Case(f"SRX-{idx:03d}", bundle(f"SRX-{idx:03d}", meds), {x.replace(":", ":urn:sentinelrx|", 1) for x in expected}, category))
         idx += 1
     return cases
 
@@ -87,7 +92,8 @@ def naive_baseline_predict(case):
         r=e["resource"]
         if r.get("resourceType")!="MedicationRequest":
             continue
-        code=r["medicationCodeableConcept"]["coding"][0]["code"]
+        coding=r["medicationCodeableConcept"]["coding"][0]
+        code=coding["system"] + "|" + coding["code"]
         context=r.get("meta",{}).get("tag",[{}])[0].get("code")
         if context=="admission":
             admissions.add(code)
