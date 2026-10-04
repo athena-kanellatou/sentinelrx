@@ -6,7 +6,7 @@ Run `python scripts/run_perturbation_benchmark.py` to regenerate `perturbation_r
 
 Current result: exact verified-finding sets 32/32; expected abstention presence 32/32; crashes 0/32. Separate pytest tests attempt to forge candidate evidence and ensure a previously verified candidate is rechecked.
 
-Coverage: resource order/noise, display invariance, blank first coding, normalized context tags, mixed supported resource types, missing ID, repeated IDs, unsupported statuses, malformed metadata and medication coding, terminology-system collision, conflicting context, unsupported medication references, multiple dosage instructions, missing dose and contradictory admission doses.
+Coverage: resource order/noise, display invariance, blank first coding, normalized context tags, mixed supported resource types, missing ID, repeated IDs, unsupported statuses, malformed metadata and medication coding, distinct terminology systems sharing one code, conflicting context, unsupported medication references, multiple dosage instructions, missing dose and contradictory admission doses.
 
 Expected behavior is explicit in `sentinelrx/perturbation.py`; it is not obtained by running the engine to generate labels. However the cases and implementation were developed together, so they remain regression evidence. Dose synonyms deliberately produce a dose-TEXT finding: semantic dose equivalence is not supported. Missing dose text is not assessed and does not by itself produce an abstention.
 

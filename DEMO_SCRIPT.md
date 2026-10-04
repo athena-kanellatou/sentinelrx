@@ -1,19 +1,24 @@
-# SentinelRx: 115-second demo
+# Two-minute demo - record the current application
 
-0-10s — Show the admission/discharge timeline. “In this synthetic transition, metformin is absent from discharge, lisinopril appears twice, and its dose text changes.”
+0:00-0:15 - Safety Review
+“At discharge, an apparent missing medication can mean an error, an intended stop, or incomplete data. SentinelRx keeps these possibilities open for a reviewer.” Show the synthetic label and three evidence-checked findings.
 
-10-25s — Safety Review: 3 VERIFIED, 0 ABSTAIN, 4 resources. “SentinelRx flags discrepancies with deterministic rules. A separate gate checks the evidence before presenting verified findings for clinician review.”
+0:15-0:30 - Evidence Provenance
+“Each record finding links to the source. Evidence-checked means the local discrepancy predicate passed. It does not mean the prescription is clinically correct.” Expand the metformin omission and show its resource.
 
-25-43s — Expand the dose-text change and show both resource IDs and verification explanation. “Verified means these source references and the discrepancy predicate checked out within this bundle. It does not mean the change was clinically wrong.”
+0:30-1:05 - AI Note Review
+Select Metformin. Use Documented stop. “This real, local learned model reads a short synthetic note and proposes a stop. The original quote is visible. I linked it to metformin; the model has not verified that link. The omission remains on screen.” Select a reviewer annotation and download the audit JSON.
 
-43-55s — Evidence Provenance table. “Each finding resolves to the records involved. No hidden source or generated clinical recommendation.”
+1:05-1:20 - AI abstention
+Select Ambiguous instruction. “When the wording is uncertain, this model abstains. It cannot remove findings or approve a discharge.”
 
-55-75s — Counterfactual Lab: resolve metformin omission. Show three findings becoming two. “Changing the synthetic evidence removes the omission candidate when the same engine reruns.”
+1:20-1:35 - Counterfactual Lab
+Select Resolve metformin omission. “Only a change to the structured evidence changes the record finding. This control changes synthetic data, not a patient prescription.”
 
-75-93s — Change Demo evidence to Missing medication identity; return to Safety Review. Show 0 VERIFIED and ABSTAIN explanations. “An unknown medication could change the comparison. The gate abstains instead of assuming it knows.”
+1:35-1:50 - Evaluation
+“78 tests pass. The small authored note split had 23 of 24 correct outputs including abstentions, with only 15 proposals. We publish the failure as well. None of these are clinical validation.”
 
-93-108s — Evaluation: 120 regression, 90 failure-handling, 32 authored perturbations. “These are reproducible synthetic software tests, not held-out evaluation or clinical validation. The baseline only compares medication sets.”
+1:50-2:00 - Close
+“FHIRGuard is disclosed prior work. SentinelRx adds a compact note-and-record review workflow: AI reads the note, rules check records, the reviewer decides.”
 
-108-115s — Close: “Evidence before confidence. Abstention before guessing. The clinician decides.”
-
-Keep the scope caption visible. Do not describe this implementation as AI-powered, general FHIR support, clinical validation or an independent clinical verifier. Originality disclosure belongs in the submission text and README. Record actual UI footage; the hero graphic is an informational summary, not an application screenshot.
+Use actual UI capture; do not reuse old footage showing VERIFIED or claiming there is no learned model. Do not claim clinical effectiveness, an independent held-out benchmark or a guaranteed score.

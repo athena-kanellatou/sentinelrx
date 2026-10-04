@@ -33,7 +33,11 @@
           {
             "text": "10 mg daily"
           }
-        ]
+        ],
+        "subject": {
+          "reference": "Patient/demo-patient"
+        },
+        "intent": "order"
       }
     },
     {
@@ -61,7 +65,11 @@
           {
             "text": "500 mg twice daily"
           }
-        ]
+        ],
+        "subject": {
+          "reference": "Patient/demo-patient"
+        },
+        "intent": "order"
       }
     },
     {
@@ -89,7 +97,11 @@
           {
             "text": "20 mg daily"
           }
-        ]
+        ],
+        "subject": {
+          "reference": "Patient/demo-patient"
+        },
+        "intent": "order"
       }
     },
     {
@@ -117,7 +129,11 @@
           {
             "text": "20 mg daily"
           }
-        ]
+        ],
+        "subject": {
+          "reference": "Patient/demo-patient"
+        },
+        "intent": "order"
       }
     }
   ]

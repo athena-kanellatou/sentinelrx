@@ -9,6 +9,7 @@ import streamlit as st
 
 from sentinelrx.engine import analyze_bundle
 from sentinelrx.models import VerificationStatus
+from sentinelrx.note_ai import classify_note
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,13 +26,17 @@ def metric_card(label: str, value: str, help_text: str | None = None):
     st.metric(label, value, help=help_text)
 
 
+def status_label(finding):
+    return "EVIDENCE-CHECKED" if finding.verification_status == VerificationStatus.VERIFIED else "ABSTAIN"
+
+
 def evidence_table(findings):
     rows = []
     for finding in findings:
         for ev in finding.evidence:
             rows.append({
                 "Finding": finding.summary,
-                "Status": finding.verification_status.value.upper(),
+                "Status": status_label(finding),
                 "FHIR Resource": f"{ev.resource_type}/{ev.resource_id}",
                 "Evidence role": ev.role,
                 "Value": ev.value,
@@ -84,7 +89,7 @@ st.set_page_config(page_title="SentinelRx", page_icon="🛡️", layout="wide")
 st.title("SentinelRx")
 st.caption("Evidence-grounded medication-transition safety for synthetic FHIR R4 data")
 
-st.info("Rules flag discrepancies. Evidence checks gate findings. The clinician decides.")
+st.info("AI reads the note. Rules check the records. The reviewer decides.")
 
 bundle = load_json(DEMO_BUNDLE)
 scenario = st.selectbox("Demo evidence", ["Complete synthetic transition", "Missing medication identity"])
@@ -93,11 +98,12 @@ if scenario == "Missing medication identity":
         resource = entry.get("resource", {})
         if resource.get("id") == "discharge-lisinopril":
             resource.pop("medicationCodeableConcept", None)
-st.caption("VERIFIED = bundle-local predicate and source checks passed; not clinical correctness. Absence assumes complete supplied lists. Missing dose text is not assessed.")
+st.caption("EVIDENCE-CHECKED = bundle-local predicate and source checks passed; not clinical correctness. Absence assumes complete supplied lists. Missing dose text is not assessed.")
 result = analyze_bundle(bundle)
 
 tabs = st.tabs([
     "Safety Review",
+    "AI Note Review",
     "Medication Timeline",
     "Evidence Provenance",
     "Counterfactual Lab",
@@ -111,17 +117,17 @@ with tabs[0]:
 
     c1, c2, c3 = st.columns(3)
     with c1:
-        metric_card("Verified findings", str(len(verified)))
+        metric_card("Evidence-checked findings", str(len(verified)))
     with c2:
         metric_card("Abstentions", str(len(abstained)))
     with c3:
         metric_card("FHIR resources reviewed", str(len(result.medications)))
 
     if not result.findings:
-        st.success("No discrepancies detected.")
+        st.info("No supported discrepancies detected. Unassessed data and clinical intent still require review.")
     else:
         for finding in result.findings:
-            status = "VERIFIED" if finding.verification_status == VerificationStatus.VERIFIED else "ABSTAIN"
+            status = status_label(finding)
             with st.expander(f"{status} · {finding.summary}", expanded=True):
                 st.write(finding.rationale)
                 st.caption(finding.verification_reason)
@@ -131,6 +137,43 @@ with tabs[0]:
                     st.code(f"{ev.resource_type}/{ev.resource_id}  ·  {ev.role}")
 
 with tabs[1]:
+    st.subheader("AI-assisted note review")
+    st.write("Select a medication, paste one synthetic transition note, then inspect the model's proposal alongside the original record evidence.")
+    st.caption("Local TF-IDF + logistic regression, trained on 48 authored examples. No API key or external service. This is a small research classifier, not a clinical language model.")
+    options = {m.medication_key: m.medication_display for m in result.medications if m.medication_key != "unknown"}
+    key = st.selectbox("Medication to review (linked by you)", list(options), index=next((i for i, k in enumerate(options) if options[k] == "Metformin"), 0), format_func=lambda k: options[k])
+    example = st.selectbox("Synthetic note scenario", ["Documented stop", "Documented continuation", "Ambiguous instruction", "Custom note"])
+    examples = {"Documented stop": "The discharge plan says to discontinue this medication.",
+                "Documented continuation": "Continue the home medication without changes.",
+                "Ambiguous instruction": "It is unclear whether to stop or continue this medication.",
+                "Custom note": ""}
+    note = st.text_area("Original synthetic note", value=examples[example], max_chars=2000, key="note_"+example)
+    if note.strip():
+        proposal = classify_note(note)
+        left, right = st.columns(2)
+        with left:
+            st.markdown("**Learned proposal - unconfirmed**")
+            st.write(proposal.proposal.upper())
+            st.caption(f"Model score {proposal.score:.2f}; top-two margin {proposal.margin:.2f}. Not calibrated confidence.")
+            st.info(proposal.review_question)
+            st.caption(proposal.reason)
+            st.markdown("**Exact source text**")
+            st.code(proposal.source_quote)
+        with right:
+            st.markdown("**Record evidence stays visible**")
+            for finding in result.findings:
+                if finding.medication_key == key:
+                    st.write(f"{status_label(finding)} · {finding.summary}")
+                    st.caption(finding.verification_reason)
+            st.warning("A note proposal never removes a discrepancy or upgrades its evidence status. You supplied the medication link; the model has not verified it.")
+        decision = st.selectbox("Reviewer annotation (demo only)", ["Unreviewed", "Needs source clarification", "Possible intended transition - requires confirmation", "Record discrepancy needs follow-up"])
+        report = {"scope": "Synthetic demonstration; not a treatment decision", "medication_key": key,
+                  "human_supplied_medication_link": True, "note_proposal": proposal.model_dump(),
+                  "reviewer_annotation": decision,
+                  "record_findings": [f.model_dump(mode="json") for f in result.findings if f.medication_key == key]}
+        st.download_button("Download review audit JSON", json.dumps(report, indent=2), "sentinelrx-review.json", "application/json")
+
+with tabs[2]:
     st.subheader("Admission → Discharge Medication Timeline")
     df = medication_table(result)
     if not df.empty:
@@ -143,17 +186,17 @@ with tabs[1]:
         st.write("Transition view")
         st.dataframe(pivot, width="stretch", hide_index=True)
 
-with tabs[2]:
+with tabs[3]:
     st.subheader("Evidence Provenance")
-    st.write("Verified findings resolve to source resources. Abstentions may identify missing or unresolvable evidence.")
+    st.write("Evidence-checked findings resolve to source resources. Abstentions may identify missing or unresolvable evidence.")
     ev = evidence_table(result.findings)
     if ev.empty:
         st.info("No evidence links to show.")
     else:
         st.dataframe(ev, width="stretch", hide_index=True)
-        st.caption("This is the core safety contract: no unsupported finding reaches VERIFIED state.")
+        st.caption("Checks establish bundle-local predicates, not clinical correctness or source completeness.")
 
-with tabs[3]:
+with tabs[4]:
     st.subheader("Counterfactual Safety Lab")
     st.write("Change a synthetic clinical fact and rerun the exact same engine.")
     mode = st.selectbox(
@@ -171,12 +214,12 @@ with tabs[3]:
     with left:
         st.markdown("**Before**")
         for f in result.findings:
-            st.write(f"• {f.verification_status.value.upper()} · {f.summary}")
+            st.write(f"• {status_label(f)} · {f.summary}")
     with right:
         st.markdown("**After**")
         if mutated_result.findings:
             for f in mutated_result.findings:
-                st.write(f"• {f.verification_status.value.upper()} · {f.summary}")
+                st.write(f"• {status_label(f)} · {f.summary}")
         else:
             st.success("No remaining discrepancies in this scenario.")
 
@@ -187,8 +230,14 @@ with tabs[3]:
     if resolved:
         st.success("Resolved by changed evidence: " + ", ".join(resolved))
 
-with tabs[4]:
+with tabs[5]:
     st.subheader("Reproducible Evaluation")
+    ai_path = ROOT / "note_ai_results.json"
+    if ai_path.exists():
+        ai = load_json(ai_path)
+        st.write("Local learned note classifier: authored evaluation split")
+        st.json({k: ai[k] for k in ["training_examples", "cases", "coverage", "accepted_accuracy", "overall_exact_accuracy", "unsafe_acceptances_on_abstain_cases"]})
+        st.caption(ai["scope"] + " Scores are not calibrated clinical confidence.")
     std = load_json(STANDARD_RESULTS)
     robust = load_json(ROBUST_RESULTS)
 

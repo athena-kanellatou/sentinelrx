@@ -9,7 +9,7 @@ def build_challenges():
     d = med('d', 'drug', 'Example', 'discharge', '20 mg daily')
     cases = []
     def add(name, resources, expected=(), abstain=False):
-        cases.append(RobustCase(name, bundle(name, deepcopy(resources)), set(expected), abstain, name))
+        cases.append(RobustCase(name, bundle(name, deepcopy(resources)), {x.replace(":", ":urn:robust|", 1) if "|" not in x else x for x in expected}, abstain, name))
     noise = {'resourceType': 'Observation', 'id': 'noise'}
     for i, order in enumerate(permutations([a, d, noise])):
         add(f'order_noise_{i}', order, ['dose_change:drug'])
@@ -31,7 +31,7 @@ def build_challenges():
     x = deepcopy(d); x['meta']['tag'] = [{'code': 'postoperative'}]
     add('substring_is_not_context', [a, x], [], True)
     x = deepcopy(d); x['medicationCodeableConcept']['coding'][0]['system'] = 'urn:other'
-    add('system_collision', [a, x], [], True)
+    add('distinct_systems', [a, x], ['omission:urn:robust|drug', 'addition:urn:other|drug'])
     x = deepcopy(d); x['medicationCodeableConcept']['coding'].append({'system': 'urn:other', 'code': 'other'})
     add('ambiguous_codings', [a, x], [], True)
     for value in ['broken', {'text': 'Example'}, {'coding': 'bad'}, {'coding': [None]}, {}]:
